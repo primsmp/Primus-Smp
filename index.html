@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIMUS SMP - Minecraft Ranks Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.08) 0%, transparent 50%),
+                #0a0a0a;
+            color: #e8e8e8;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230a0a0a' fill-opacity='0.25'%3E%3Cpath d='M20 0L0 20v20h20v-20h20V0H20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-size: 60px 60px, 40px 40px;
+            background-position: 0 0, 20px 20px;
+            z-index: -2;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 32px;
+            background: rgba(15, 15, 28, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(80, 80, 140, 0.3);
+            box-shadow: 
+                0 12px 48px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .server-name {
+            font-family: 'Cinzel Decorative', Georgia, serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #55ff55 0%, #44cc44 50%, #228b22 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 
+                0 0 20px rgba(85, 255, 85, 0.4),
+                0 4px 0 rgba(0, 0, 0, 0.5);
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            position: relative;
+        }
+
+        .server-name::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #55ff55, transparent);
+            border-radius: 2px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .minecraft-logo {
+            font-family: 'Cinzel Decorative', Georgia, serif;
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            color: #55ff55;
+            text-shadow: 
+                0 0 16px rgba(85, 255, 85, 0.4),
+                0 4px 0 rgba(0, 0, 0, 0.5);
+            margin-bottom: 16px;
+            letter-spacing: -0.015em;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+            font-weight: 300;
+            color: #b8b8b8;
+            margin-bottom: 28px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            letter-spacing: 0.01em;
+        }
+
+        .discord-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #7289da 0%, #5865f2 100%);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 8px 32px rgba(88, 101, 242, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 16px 48px rgba(88, 101, 242, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        /* TABS */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 48px;
+            background: rgba(20, 20, 40, 0.8);
+            backdrop-filter: blur(25px);
+            border-radius: 24px;
+            padding: 12px;
+            border: 1px solid rgba(85, 255, 85, 0.15);
+            box-shadow: 
+                0 12px 48px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(35, 35, 55, 0.8);
+            color: #d8d8d8;
+            border: none;
+            padding: 20px 36px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+            position: relative;
+            overflow: hidden;
+            min-width: 160px;
+            box-shadow: 
+                inset 0 2px 8px rgba(0, 0, 0, 0.4),
+                0 6px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(85, 255, 85, 0.1);
+            text-transform: none;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(85, 255, 85, 0.25), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .tab-btn:hover::before {
+            left: 100%;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 
+                0 20px 48px rgba(85, 255, 85, 0.25),
+                inset 0 2px 8px rgba(85, 255, 85, 0.15);
+            border-color: rgba(85, 255, 85, 0.4);
+            color: #55ff55;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #55ff55 0%, #44cc44 100%);
+            color: #1a1a1a;
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 
+                0 24px 64px rgba(85, 255, 85, 0.35),
+                0 0 40px rgba(85, 255, 85, 0.25),
+                inset 0 2px 12px rgba(255, 255, 255, 0.3);
+            border-color: #55ff55;
+            animation: pop 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: 600;
+        }
+
+        @keyframes pop {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-16px) scale(1.18); }
+            100% { transform: translateY(-8px) scale(1.08); }
+        }
+
+        /* Tab Content */
+        .tab-content { display: none; }
+        .tab-content.active {
+            display: block;
+            animation: slideUpPop 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes slideUpPop {
+            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+            50% { transform: translateY(-12px) scale(1.03); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Sections */
+        .section { margin-bottom: 80px; }
+
+        .section-title {
+            font-family: 'Cinzel', Georgia, serif;
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 52px;
+            background: linear-gradient(135deg, #55ff55 0%, #44cc44 50%, #228b22 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 
+                0 0 24px rgba(85, 255, 85, 0.35),
+                0 4px 0 rgba(0, 0, 0, 0.5);
+            letter-spacing: -0.015em;
+            position: relative;
+        }
+
+        /* Rank Cards */
+        .ranks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .rank-card {
+            background: rgba(20, 20, 40, 0.85);
+            backdrop-filter: blur(25px);
+            border-radius: 20px;
+            padding: 40px 32px;
+            text-align: center;
+            border: 1px solid rgba(85, 255, 85, 0.15);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 12px 48px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+        }
+
+        .rank-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #55ff55, #44cc44, #228b22);
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .rank-card:hover::before { transform: scaleX(1); }
+
+        .rank-card:hover {
+            transform: translateY(-16px) scale(1.02);
+            border-color: rgba(85, 255, 85, 0.4);
+            box-shadow: 
+                0 32px 80px rgba(85, 255, 85, 0.2),
+                0 16px 48px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .rank-name {
+            font-family: 'Cinzel', Georgia, serif;
+            font-size: clamp(1.6rem, 4vw, 2.3rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #55ff55 0%, #44cc44 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 
+                0 0 16px rgba(85, 255, 85, 0.35),
+                0 4px 0 rgba(0, 0, 0, 0.5);
+            letter-spacing: -0.01em;
+        }
+
+        .rank-price {
+            font-family: 'Cinzel', Georgia, serif;
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            font-weight: 800;
+            color: #ffd700 !important;
+            text-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.6),
+                0 2px 0 rgba(0, 0, 0, 0.8);
+            margin-bottom: 16px;
+            letter-spacing: -0.015em;
+            position: relative;
+        }
+
+        .price-details {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #a8a8a8;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+            display: block;
+        }
+
+        .rank-perks {
+            list-style: none;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .rank-perks li {
+            padding: 12px 0;
+            opacity: 0.9;
+            border-bottom: 1px solid rgba(85, 255, 85, 0.08);
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .rank-perks li:hover {
+            opacity: 1;
+            padding-left: 12px;
+            transform: translateX(8px);
+            color: #55ff55;
+        }
+
+        .rank-perks li:last-child { border-bottom: none; }
+
+        .rank-perks li i {
+            color: #55ff55;
+            margin-right: 16px;
+            width: 24px;
+            font-size: 1.2rem;
+            text-shadow: 0 0 12px rgba(85, 255, 85, 0.4);
+        }
+
+        .buy-btn {
+            background: linear-gradient(135deg, #55ff55 0%, #44cc44 100%);
+            color: #1a1a1a;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 
+                0 8px 32px rgba(85, 255, 85, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 
+                0 20px 64px rgba(85, 255, 85, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active { display: flex; animation: fadeIn 0.4s ease; }
+
+        .modal-content {
+            background: rgba(20, 20, 40, 0.98);
+            backdrop-filter: blur(30px);
+            border-radius: 24px;
+            padding: 52px 40px;
+            max-width: 560px;
+            width: 90%;
+            text-align: center;
+            border: 2px solid rgba(85, 255, 85, 0.25);
+            box-shadow: 
+                0 32px 96px rgba(0, 0, 0, 0.85),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            animation: popModal 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .modal h2 {
+            font-family: 'Cinzel', Georgia, serif;
+            font-size: 2.4rem;
+            margin-bottom: 28px;
+            background: linear-gradient(135deg, #55ff55 0%, #44cc44 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 
+                0 0 28px rgba(85, 255, 85, 0.5),
+                0 4px 0 rgba(0, 0, 0, 0.5);
+            letter-spacing: -0.02em;
+            font-weight: 700;
+        }
+
+        .modal p {
+            margin-bottom: 36px;
+            opacity: 0.9;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #c8c8c8;
+            font-weight: 400;
+        }
+
+        .join-discord-btn {
+            background: linear-gradient(135deg, #7289da 0%, #5865f2 100%);
+            color: white;
+            padding: 22px 48px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.15rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 
+                0 12px 48px rgba(88, 101, 242, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.025em;
+            text-transform: uppercase;
+            font-size: 1rem;
+        }
+
+        .join-discord-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 
+                0 28px 72px rgba(88, 101, 242, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            font-size: 2.4rem;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 100;
+        }
+
+        .close-modal:hover {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.15);
+            transform: rotate(90deg) scale(1.15);
+        }
+
+        /* Custom Ranks */
+        .custom-rank {
+            grid-column: 1 / -1;
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .custom-rank .rank-name {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .tabs-container { flex-direction: column; gap: 10px; padding: 16px; }
+            .tab-btn { min-width: auto; width: 100%; padding: 20px; }
+            .ranks-grid { grid-template-columns: 1fr; gap: 28px; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: rgba(20, 20, 40, 0.6); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(135deg, #55ff55, #44cc44); 
+            border-radius: 6px; 
+        }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(135deg, #44cc44, #228b22); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="server-name">PRIMUS SMP</div>
+            <div class="minecraft-logo">Minecraft Ranks Store</div>
+            <p class="subtitle">Elevate your gameplay with premium ranks featuring exclusive perks and privileges</p>
+            <a href="https://discord.gg/6vY4ncM6" class="discord-btn" target="_blank">
+                <i class="fab fa-discord"></i> Join PRIMUS SMP Discord
+            </a>
+        </div>
+
+        <!-- POPPING TABS -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('premium')">
+                <i class="fas fa-diamond"></i> Premium Ranks
+            </button>
+            <button class="tab-btn" onclick="switchTab('custom')">
+                <i class="fas fa-crown"></i> Custom Ranks
+            </button>
+        </div>
+
+        <!-- PREMIUM RANKS TAB -->
+        <div id="premium" class="tab-content active">
+            <div class="section">
+                <h2 class="section-title">Premium Ranks</h2>
+                <div class="ranks-grid">
+                    <!-- Elite Rank -->
+                    <div class="rank-card" data-rank="elite">
+                        <div class="rank-name">Elite Rank</div>
+                        <div class="rank-price">$2</div>
+                        <div class="price-details">USD - One Time Purchase</div>
+                        <ul class="rank-perks">
+                            <li><i class="fas fa-home"></i> 2 Homesets</li>
+                            <li><i class="fas fa-trash-alt"></i> /trash</li>
+                            <li><i class="fas fa-mountain"></i> /depth</li>
+                            <li><i class="fas fa-crafting-table"></i> /craft</li>
+                        </ul>
+                        <button class="buy-btn" onclick="openModal('elite')">
+                            <i class="fas fa-shopping-cart"></i> Purchase Now
+                        </button>
+                    </div>
+
+                    <!-- Champion Rank -->
+                    <div class="rank-card" data-rank="champion">
+                        <div class="rank-name">Champion Rank</div>
+                        <div class="rank-price">$4</div>
+                        <div class="price-details">USD - One Time Purchase</div>
+                        <ul class="rank-perks">
+                            <li><i class="fas fa-home"></i> 3 Homesets</li>
+                            <li><i class="fas fa-trash-alt"></i> /trash & .disposal</li>
+                            <li><i class="fas fa-chest"></i> /echest</li>
+                        </ul>
+                        <button class="buy-btn" onclick="openModal('champion')">
+                            <i class="fas fa-shopping-cart"></i> Purchase Now
+                        </button>
+                    </div>
+
+                    <!-- Immortal Rank -->
+                    <div class="rank-card" data-rank="immortal">
+                        <div class="rank-name">Immortal Rank</div>
+                        <div class="rank-price">$6</div>
+                        <div class="price-details">USD - Every 2 Seasons</div>
+                        <ul class="rank-perks">
+                            <li><i class="fas fa-home"></i> 4 Homesets</li>
+                            <li><i class="fas fa-trash-alt"></i> /trash & .disposal</li>
+                            <li><i class="fas fa-chest"></i> /echest</li>
+                            <li><i class="fas fa-stone-block"></i> Grindstone</li>
+                        </ul>
+                        <button class="buy-btn" onclick="openModal('immortal')">
+                            <i class="fas fa-shopping-cart"></i> Purchase Now
+                        </button>
+                    </div>
+
+                    <!-- Deadliest Rank -->
+                    <div class="rank-card" data-rank="deadliest">
+                        <div class="rank-name">Deadliest Rank</div>
+                        <div class="rank-price">$8</div>
+                        <div class="price-details">USD - Every Season</div>
+                        <ul class="rank-perks">
+                            <li><i class="fas fa-home"></i> 7 Homesets</li>
+                            <li><i class="fas fa-trash-alt"></i> /trash & .disposal</li>
+                            <li><i class="fas fa-chest"></i> /echest</li>
+                            <li><i class="fas fa-hammer"></i> /workbench</li>
+                            <li><i class="fas fa-crafting-table"></i> /craft</li>
+                            <li><i class="fas fa-anvil"></i> Anvil</li>
+                            <li><i class="fas fa-stone-block"></i> Grindstone</li>
+                        </ul>
+                        <button class="buy-btn" onclick="openModal('deadliest')">
+                            <i class="fas fa-shopping-cart"></i> Purchase Now
+                        </button>
+                    </div>
+
+                    <!-- Boss Rank -->
+                    <div class="rank-card" data-rank="boss">
+                        <div class="rank-name">Boss Rank</div>
+                        <div class="rank-price">$10</div>
+                        <div class="price-details">USD - Every Season</div>
+                        <ul class="rank-perks">
+                            <li><i class="fas fa-home"></i> 8 Homesets</li>
+                            <li><i class="fas fa-trash-alt"></i> /trash & .disposal</li>
+                            <li><i class="fas fa-chest"></i> /echest</li>
+                            <li><i class="fas fa-hammer"></i> /workbench</li>
+                            <li><i class="fas fa-crafting-table"></i> /craft</li>
+                            <li><i class="fas fa-anvil"></i> Anvil</li>
+                            <li><i class="fas fa-stone-block"></i> Grindstone</li>
+                        </ul>
+                        <button class="buy-btn" onclick="openModal('boss')">
+                            <i class="fas fa-shopping-cart"></i> Purchase Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CUSTOM RANKS TAB -->
+        <div id="custom" class="tab-content">
+            <div class="section">
+                <h2 class="section-title">Custom Ranks</h2>
+                <div class="ranks-grid">
+                    <div class="rank-card custom-rank" data-rank="custom">
+                        <div class="rank-name">Custom Rank</div>
+                        <div class="rank-price">Contact Us</div>
+                        <div class="price-details">Personalized Pricing</div>
+                        <ul class="rank-perks">
+                            <li><i class="fas fa-palette"></i> Custom Perks</li>
+                            <li><i class="fas fa-paint-brush"></i> Custom Colour</li>
+                            <li><i class="fas fa-gem"></i> Custom Theme</li>
+                            <li><i class="fas fa-crown"></i> Exclusive Features</li>
+                            <li><i class="fas fa-star"></i> Priority Support</li>
+                        </ul>
+                        <button class="buy-btn" onclick="openModal('custom')">
+                            <i class="fas fa-comments"></i> Create Ticket
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="buyModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Create Support Ticket</h2>
+            <p>
+                Join <strong>PRIMUS SMP</strong> Discord server and create a support ticket. Our team will guide you through secure payment and instant rank activation.
+            </p>
+            <a href="https://discord.gg/6vY4ncM6" class="join-discord-btn" target="_blank">
+                <i class="fab fa-discord"></i> Join PRIMUS SMP Discord
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching with POP effect
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Modal functions
+        function openModal(rank) {
+            const modal = document.getElementById('buyModal');
+            const title = document.getElementById('modalTitle');
+            title.textContent = `Purchase ${getRankName(rank)}`;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('buyModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function getRankName(rank) {
+            const names = {
+                elite: 'Elite Rank',
+                champion: 'Champion Rank',
+                immortal: 'Immortal Rank',
+                deadliest: 'Deadliest Rank',
+                boss: 'Boss Rank',
+                custom: 'Custom Rank'
+            };
+            return names[rank] || 'Your Rank';
+        }
+
+        // Event listeners
+        window.onclick = function(event) {
+            const modal = document.getElementById('buyModal');
+            if (event.target === modal) closeModal();
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Staggered card entrance
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.rank-card');
+            cards.forEach((card, index) => {
+                card.style.animation = `slideUpPop 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) ${index * 0.12}s both`;
+            });
+        });
+    </script>
+</body>
+</html>
